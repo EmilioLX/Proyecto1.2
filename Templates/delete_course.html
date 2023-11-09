@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="container my-4">
+        <h2>Eliminar Curso</h2>
+        <form method="post">
+            {% csrf_token %}
+            <div class="card w-50 mx-auto my-5">
+                <div class="card-body">
+                    <h5 class="card-title">Proceso de eliminación irreversible</h5>
+                    <p>¿Estás seguro de que deseas eliminar el curso <strong>{{ course.name }}</strong>?</p>
+
+                    <div class="float-end">
+                        <button type="submit" class="btn btn-danger mt-auto">Eliminar</button>
+                        <a class="btn btn-secondary mt-auto" href="{% url 'courses' %}">Cancelar</a>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+{% endblock %}

@@ -1,0 +1,18 @@
+{% if enrolled_courses %}
+    <h5>Cursos asignados</h5>
+    <ul class="list-group">
+        {% for course in enrolled_courses %}
+            {% with enrollment_count=course.registration_set.count %}
+            <li class="list-group-item">
+                {{ course.name }}
+                <a href="{% url 'evolution' course.id %}" class="btn btn-warning float-end">Pagina</a>
+                
+            </li>
+            {% endwith %}
+        {% endfor %}
+    </ul>
+{% else %}
+    <div class="alert alert-primary" role="alert">
+        No tiene cursos inscritos
+    </div>
+{% endif %}

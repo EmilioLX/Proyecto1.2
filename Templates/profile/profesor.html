@@ -1,0 +1,18 @@
+{% if assigned_courses %}
+    <h5>Cursos asignados</h5>
+    <ul class="list-group">
+        {% for course in assigned_courses %}
+            {% with enrollment_count=course.registration_set.count %}
+            <li class="list-group-item">
+                {{ course.name }}
+                <a href="{% url 'student_list_mark' course.id %}" class="btn btn-warning float-end">Pagina</a>
+                <span class="badge badge-primary float-end text-black">Estudiantes inscritos: {{ enrollment_count }}</span>
+            </li>
+            {% endwith %}
+        {% endfor %}
+    </ul>
+{% else %}
+    <div class="alert alert-primary" role="alert">
+        No hay Cursos en progreso hasta el momento
+    </div>
+{% endif %}

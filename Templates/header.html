@@ -1,0 +1,81 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<!-- Topbar Start -->
+<div class="container-fluid bg-dark text-white d-none d-lg-flex">
+    <div class="container py-3">
+        <div class="d-flex align-items-center">
+            <a href="" style="text-decoration: none;"> <!-- Agrega este estilo en línea -->
+                <h2 class="text-white fw-bold m-0">Universidad de San Carlos</h2>
+            </a>
+            <div class="ms-auto d-flex align-items-center">
+                <small class="ms-4"><i class="fa fa-map-marker-alt me-3"></i>Zona 12, ciudad, guatemala</small>
+                <small class="ms-4"><i class="fa fa-envelope me-3"></i>usacingenieria@gmail.com</small>
+                <small class="ms-4"><i class="fa fa-phone-alt me-3"></i>+52152165</small>
+                <div class="ms-3 d-flex">
+                    <a class="btn btn-sm-square btn-light text-primary rounded-circle ms-2" href=""><i
+                            class="fab fa-facebook-f"></i></a>
+                    <a class="btn btn-sm-square btn-light text-primary rounded-circle ms-2" href=""><i
+                            class="fab fa-twitter"></i></a>
+                    <a class="btn btn-sm-square btn-light text-primary rounded-circle ms-2" href=""><i
+                            class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Topbar End -->
+
+{% if user.is_authenticated %}
+    {% if group_name == 'estudiantes' %}
+        <header class="p-3 text-bg-dark bg-dark">
+    {% elif group_name == 'profesores' %}
+        <header class="p-3 text-bg-dark bg-info">
+    {% elif group_name == 'administrativos' %}
+        <header class="p-3 text-bg-dark bg-secondary">
+    {% endif %}
+{% else %}
+    <header class="p-3 text-bg-dark ">
+{% endif %}
+
+<div class="container">
+    <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+        <a href="{% url 'home' %}" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
+            FIUSAC
+        </a>
+
+            {% if user.is_authenticated %}
+                {% if group_name == 'estudiantes' %}
+                    <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0 bg-dark">
+                {% elif group_name == 'profesores' %}
+                    <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0 bg-info">
+                {% elif group_name == 'administrativos' %}
+                    <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0 bg-secondary">
+                {% endif %}
+            {% else %}
+                <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+            {% endif %}
+
+            <li><a href="{% url 'home' %}" class="nav-link px-2 text-white">Inicio</a></li>
+            <li><a href="{% url 'courses' %}" class="nav-link px-2 text-white">Cursos</a></li>
+
+            {% if not user.is_authenticated or group_name == 'estudiantes' %}    
+                <li><a href="#" class="nav-link px-2 text-white">preguntas y respuestas</a></li>
+            <li><a href="#" class="nav-link px-2 text-white">Acerca de</a></li>
+            {% endif %}
+        </ul>
+           
+
+        <div class="text-end">
+                {% if user.is_authenticated %}
+                    <li style="list-style-type: none;">
+                    <a class="nav-link px-2 text-white" href="{% url 'profile' %}">{{ group_name_singular|capfirst }}
+                    | {{ user.username }}</a>
+                    </li>    
+                {% else %}
+                    <a class="btn btn-outline-light me-2" href="{% url 'login' %}">Iniciar Sesión</a>
+                    <a class="btn btn-outline-light me-2" href="{% url 'register' %}">Registrarse</a>
+                {% endif %}   
+        </div>
+    </div>
+</div>
+    </header>
+

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- Agrega los enlaces a los estilos de Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Curso: {{ courseName }}</h1>
+        <p>Profesor: {{ teacher }}</p>
+        <p>Cantidad de Clases: {{ class_quantity }}</p>
+
+        <h2>Notas:</h2>
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Nota 1</th>
+                        <th>Nota 2</th>
+                        <th>Nota 3</th>
+                        <th>Nota Final</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for mark in marks %}
+                    <tr>
+                        <td>{{ mark.mark_1 }}</td>
+                        <td>{{ mark.mark_2 }}</td>
+                        <td>{{ mark.mark_3 }}</td>
+                        <td>{{ mark.average }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        
+    </div>
+</body>
+</html>

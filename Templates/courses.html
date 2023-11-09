@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="container my-4">
+        <h2>Cursos</h2>
+        {% if group_name == 'administrativos' %}
+        <a class="btn btn-success" href="{% url 'course_create' %}">Agregar curso</a>
+        {% endif %}
+
+        <!--seccion de mensajes-->
+        {% if messages %}
+            <div class="container mt-3">
+                {% for message in messages %}
+                    <div class="alert alert-success" role="alert">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+        
+    <div class="row row-col-1 row-cols-md-3 g-4 my-4">
+        {% for course in courses %}
+        <div class="col">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">{{ course.name }}</h5>
+                    <p class="card-text">{{ course.description }}</p>
+                    <p class="card-text"><strong>Profesor: </strong>{{ course.teacher.first_name }} {{ course.teacher.last_name }}</p>
+                    <p class="card-text"><strong>Cantidad de clases: </strong>{{ course.class_quantity }}</p>
+                    <p class="card-text"><strong>Estudiantes inscritos: </strong>{{ course.enrollment_count }}</p>
+                    <p class="card-text"><strong>Horario: </strong>{{ course.schedule }}</p>
+                    <p class="card-text"><strong>Costo: </strong> Q{{ course.cost }}</p>
+
+                    {% if course.status == 'F' %}
+                    <h5><span class="badge bg-danger ">{{ course.get_status_display }}</span>
+                    </h5>
+                    {% if course.is_enrolled %}
+                        <a class="btn btn-sm btn-warning" href="pagina del catedratico">Pagina Curso</a>
+                    {% endif %}
+                {% elif course.status == 'P' %}
+                    <h5><span
+                        class="badge bg-warning text-dark ">{{ course.get_status_display }}</span>
+                    </h5>
+                    {% if course.is_enrolled %}
+                        <a class="btn btn-sm btn-warning" href="pagina del catedratico">Pagina curso</a>
+                    {% endif %}
+                {% elif course.status == 'I' %}
+                    <h5><span class="badge bg-success ">{{ course.get_status_display }}</span>
+                    </h5>
+                    {% if group_name == 'estudiantes' and not course.is_enrolled %}
+                        <a class="btn btn-sm btn-success" href="{% url 'enroll_course' course.id %}">Inscribirse</a>
+                    {% elif course.is_enrolled %}
+                        <a class="btn btn-sm btn-warning" href="{% url 'profile' %}">Ir al Perfil</a>
+                        <a class="btn btn-sm btn-warning" href="{% url 'evolution' course.id %}">Pagina Curso</a>
+                    {% endif %}
+                {% endif %}
+
+                    <!--{% if group_name == 'estudiantes' and not course.is_enrolled %}
+                        <a class="btn btn-sm btn-success" href="">inscribirse</a>
+                    {% elif course.is_enrolled %}
+                        <a class="btn btn-sm btn-warning" href="{% url 'profile' %}">Pagina curso o perfil</a>
+                    {% endif %}-->
+
+                    {% if group_name == 'administrativos' %}
+                        <a class="btn btn-sm btn-warning" href="{% url 'course_edit' course.id %}">Editar</a>
+                        <a class="btn btn-sm btn-danger" href="{% url 'course_delete' course.id %}">Eliminar</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% endfor %}       
+    </div>
+
+</div>
+   
+{% block footer %}
+        {% include 'footer.html' %}
+    {% endblock %}
+{% endblock %}
