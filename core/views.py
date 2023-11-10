@@ -219,7 +219,7 @@ class CourseEnrollmentView(TemplateView):
             # Enviar correo de verificación
             subject = 'Verificación de inscripción en el curso'
             message = '¡Gracias por inscribirte en el curso! Tu inscripción ha sido verificada.'
-            from_email = 'jelxdjango@gmail.com'  # El remitente del correo
+            from_email = ''  # El remitente del correo
             recipient_list = [student.email]  # La dirección de correo del estudiante
 
             send_mail(subject, message, from_email, recipient_list)
